@@ -7,7 +7,7 @@ using namespace std;
 
 class BubbleSort : public AlgoritmoOrdenamiento {
 public:
-    BubbleSort(const vector<int>& datos);
+    explicit BubbleSort(const vector<int>& datos);
     ~BubbleSort();
     
     void reiniciar(const vector<int>& datos) override;

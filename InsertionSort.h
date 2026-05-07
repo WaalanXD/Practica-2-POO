@@ -7,7 +7,7 @@ using namespace std;
 
 class InsertionSort : public AlgoritmoOrdenamiento {
 public:
-    InsertionSort(const vector<int>& datos);
+    explicit InsertionSort(const vector<int>& datos);
     ~InsertionSort();
     
     void reiniciar(const vector<int>& datos) override;

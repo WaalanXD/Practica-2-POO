@@ -8,7 +8,7 @@ using namespace std;
 
 class MergeSort : public AlgoritmoOrdenamiento {
 public:
-    MergeSort(const vector<int>& datos);
+    explicit MergeSort(const vector<int>& datos);
     ~MergeSort();
     
     void reiniciar(const vector<int>& datos) override;

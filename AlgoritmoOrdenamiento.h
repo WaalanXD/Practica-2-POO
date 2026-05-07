@@ -10,10 +10,10 @@ using namespace std;
 class AlgoritmoOrdenamiento {
 public:
     // Constructor: recibe los datos a ordenar
-    AlgoritmoOrdenamiento(const vector<int>& datos);
+    explicit AlgoritmoOrdenamiento(const vector<int>& datos);
     
     // Destructor virtual: necesario para herencia
-    virtual ~AlgoritmoOrdenamiento();
+    virtual ~AlgoritmoOrdenamiento() = default;
 
     // Metodo virtual puro: cada subclase DEBE implementarlo
     virtual void paso() = 0;
@@ -22,18 +22,18 @@ public:
     virtual void reiniciar(const vector<int>& datos);
 
     // Retorna true si ya termino de ordenar
-    bool terminado() const;
+    bool terminado() const { return m_terminado; }
 
     // Retorna el nombre del algoritmo
     virtual string nombre() const = 0;
 
     // Getters para acceder al estado
-    vector<int> getDatos() const;
-    int getTamano() const;
-    int getIndicePrimero() const;
-    int getIndiceSegundo() const;
-    int getComparaciones() const;
-    int getIntercambios() const;
+    vector<int> getDatos() const { return m_datos; }
+    int getTamano() const { return (int)m_datos.size(); }
+    int getIndicePrimero() const { return m_i; }
+    int getIndiceSegundo() const { return m_j; }
+    int getComparaciones() const { return m_comparaciones; }
+    int getIntercambios() const { return m_intercambios; }
 
 protected:
     vector<int> m_datos;      // El arreglo a ordenar

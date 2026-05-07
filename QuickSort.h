@@ -8,7 +8,7 @@ using namespace std;
 
 class QuickSort : public AlgoritmoOrdenamiento {
 public:
-    QuickSort(const vector<int>& datos);
+    explicit QuickSort(const vector<int>& datos);
     ~QuickSort();
     
     void reiniciar(const vector<int>& datos) override;

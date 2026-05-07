@@ -7,7 +7,7 @@ using namespace std;
 
 class SelectionSort : public AlgoritmoOrdenamiento {
 public:
-    SelectionSort(const vector<int>& datos);
+    explicit SelectionSort(const vector<int>& datos);
     ~SelectionSort();
     
     void reiniciar(const vector<int>& datos) override;

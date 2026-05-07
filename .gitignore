@@ -1,0 +1,18 @@
+# Build outputs / binaries
+*.exe
+*.out
+
+# Object files
+*.o
+*.obj
+
+# Windows/MSVC artifacts
+*.pdb
+*.ilk
+*.idb
+*.tlog
+
+# Common build directories
+build/
+out/
+bin/

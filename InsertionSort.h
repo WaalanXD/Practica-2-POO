@@ -12,7 +12,7 @@ public:
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Insertion Sort"; }
 
 private:
     int m_valorActual;   // El valor que estamos insertando

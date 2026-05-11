@@ -30,11 +30,6 @@ void InsertionSort::reiniciar(const vector<int>& datos) {
     }
 }
 
-// Nombre del algoritmo
-string InsertionSort::nombre() const {
-    return "Insertion Sort";
-}
-
 // Un paso del algoritmo
 void InsertionSort::paso() {
     if (m_terminado) {

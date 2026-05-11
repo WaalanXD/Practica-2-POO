@@ -12,7 +12,7 @@ public:
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Bubble Sort"; }
 
 private:
     bool m_huboSwap;  // Si hubo intercambio en esta pasada

@@ -10,6 +10,7 @@
 #include "SelectionSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "MemoryAnalysis.h"
 
 using namespace std;
 
@@ -239,49 +240,7 @@ void ejecutarPruebas() {
 void analisisMemoria() {
     cout << endl;
     cout << "========== ANALISIS DE MEMORIA ==========" << endl;
-
-    cout << endl;
-    cout << "--- Tamanos de tipos basicos ---" << endl;
-    cout << "int              : " << sizeof(int) << " bytes" << endl;
-    cout << "bool             : " << sizeof(bool) << " bytes" << endl;
-    cout << "vector<int>      : " << sizeof(vector<int>) << " bytes" << endl;
-    cout << "puntero (void*)  : " << sizeof(void*) << " bytes" << endl;
-
-    cout << endl;
-    cout << "--- Tamanos de las clases ---" << endl;
-    cout << "AlgoritmoOrdenamiento : " << sizeof(AlgoritmoOrdenamiento) << " bytes" << endl;
-    cout << "BubbleSort            : " << sizeof(BubbleSort) << " bytes" << endl;
-    cout << "InsertionSort         : " << sizeof(InsertionSort) << " bytes" << endl;
-    cout << "SelectionSort         : " << sizeof(SelectionSort) << " bytes" << endl;
-    cout << "MergeSort             : " << sizeof(MergeSort) << " bytes" << endl;
-    cout << "QuickSort             : " << sizeof(QuickSort) << " bytes" << endl;
-
-    cout << endl;
-    cout << "--- Stack vs Heap ---" << endl;
-    vector<int> datos;
-    datos.push_back(5);
-    datos.push_back(3);
-    datos.push_back(8);
-    datos.push_back(1);
-    datos.push_back(9);
-    datos.push_back(2);
-    datos.push_back(7);
-    datos.push_back(4);
-    datos.push_back(6);
-
-    BubbleSort a1(datos);
-    AlgoritmoOrdenamiento* a2 = new BubbleSort(datos);
-
-    cout << "Direccion a1 (stack): " << &a1 << endl;
-    cout << "Direccion a2 (heap) : " << a2 << endl;
-
-    cout << endl;
-    cout << "--- Memoria del arreglo interno ---" << endl;
-    cout << "Elementos en el vector     : " << a1.getTamano() << endl;
-    cout << "sizeof(vector<int>) fijo   : " << sizeof(vector<int>) << " bytes" << endl;
-    cout << "Datos reales en heap       : " << a1.getTamano() * sizeof(int) << " bytes" << endl;
-
-    delete a2;
+    MemoryAnalysis::run();
 }
 
 // Funcion principal

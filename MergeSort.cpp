@@ -41,11 +41,6 @@ void MergeSort::reiniciar(const vector<int>& datos) {
     inicializarTareas();
 }
 
-// Nombre del algoritmo
-string MergeSort::nombre() const {
-    return "Merge Sort";
-}
-
 // Inicializar tareas
 void MergeSort::inicializarTareas() {
     if (m_datos.size() <= 1) {

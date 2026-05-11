@@ -28,11 +28,6 @@ void SelectionSort::reiniciar(const vector<int>& datos) {
     }
 }
 
-// Nombre del algoritmo
-string SelectionSort::nombre() const {
-    return "Selection Sort";
-}
-
 // Un paso del algoritmo
 void SelectionSort::paso() {
     if (m_terminado) {

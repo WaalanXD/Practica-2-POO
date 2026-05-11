@@ -16,3 +16,6 @@
 build/
 out/
 bin/
+
+# Local reference docs
+guia.txt

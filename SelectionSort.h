@@ -12,7 +12,7 @@ public:
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Selection Sort"; }
 
 private:
     int m_indiceMinimo;  // Indice del minimo encontrado

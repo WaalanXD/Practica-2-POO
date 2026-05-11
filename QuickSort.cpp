@@ -35,11 +35,6 @@ void QuickSort::reiniciar(const vector<int>& datos) {
     inicializarRangos();
 }
 
-// Nombre del algoritmo
-string QuickSort::nombre() const {
-    return "Quick Sort";
-}
-
 // Inicializar rangos
 void QuickSort::inicializarRangos() {
     if (m_datos.size() <= 1) {

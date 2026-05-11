@@ -27,11 +27,6 @@ void BubbleSort::reiniciar(const vector<int>& datos) {
     }
 }
 
-// Nombre del algoritmo
-string BubbleSort::nombre() const {
-    return "Bubble Sort";
-}
-
 // Un paso del algoritmo (UNA comparacion)
 void BubbleSort::paso() {
     // Si ya termino, no hacer nada

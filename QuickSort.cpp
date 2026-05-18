@@ -117,6 +117,48 @@ void QuickSort::paso() {
         // Iniciar particion
         m_partIzq = rango.izq;
         m_partDer = rango.der;
+        // Elegir pivote por "mediana de tres" (izq, medio, der) para reducir particiones desbalanceadas.
+        // Luego lo movemos al final para reutilizar la particion actual.
+        int izq = rango.izq;
+        int der = rango.der;
+        int mid = izq + (der - izq) / 2;
+
+        int a = m_datos[izq];
+        int b = m_datos[mid];
+        int c = m_datos[der];
+
+        auto less = [this](int x, int y) {
+            m_comparaciones++;
+            return x < y;
+        };
+
+        int indicePivote;
+        // indicePivote = indice del valor mediano entre a, b, c
+        // (con comparaciones contadas de forma explícita)
+        if (less(a, b)) {
+            if (less(b, c)) {
+                indicePivote = mid;      // a < b < c
+            } else if (less(a, c)) {
+                indicePivote = der;      // a < c <= b
+            } else {
+                indicePivote = izq;      // c <= a < b
+            }
+        } else {
+            if (less(a, c)) {
+                indicePivote = izq;      // b <= a < c
+            } else if (less(b, c)) {
+                indicePivote = der;      // b < c <= a
+            } else {
+                indicePivote = mid;      // c <= b <= a
+            }
+        }
+
+        if (indicePivote != der) {
+            int tmp = m_datos[indicePivote];
+            m_datos[indicePivote] = m_datos[der];
+            m_datos[der] = tmp;
+            m_intercambios++;
+        }
         m_pivote = m_datos[rango.der];
         m_indicePart = rango.izq - 1;
         m_j = rango.izq;

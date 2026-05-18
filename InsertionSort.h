@@ -7,16 +7,16 @@ using namespace std;
 
 class InsertionSort : public AlgoritmoOrdenamiento {
 public:
-    InsertionSort(const vector<int>& datos);
+    explicit InsertionSort(const vector<int>& datos);
     ~InsertionSort();
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Insertion Sort"; }
 
 private:
-    int m_valorActual;   // El valor que estamos insertando
-    bool m_insertando;   // Si estamos moviendo elementos
+    int m_valorActual;   
+    bool m_insertando;   
 };
 
 #endif

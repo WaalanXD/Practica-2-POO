@@ -8,23 +8,23 @@ using namespace std;
 
 class QuickSort : public AlgoritmoOrdenamiento {
 public:
-    QuickSort(const vector<int>& datos);
+    explicit QuickSort(const vector<int>& datos);
     ~QuickSort();
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Quick Sort"; }
 
 private:
-    // Estructura para un rango a ordenar
+    
     struct Rango {
         int izq;
         int der;
     };
 
-    stack<Rango> m_rangos;  // Pila de rangos pendientes
+    stack<Rango> m_rangos;  
 
-    // Estado de la particion actual
+    
     int m_partIzq;
     int m_partDer;
     int m_pivote;

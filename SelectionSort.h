@@ -7,15 +7,15 @@ using namespace std;
 
 class SelectionSort : public AlgoritmoOrdenamiento {
 public:
-    SelectionSort(const vector<int>& datos);
+    explicit SelectionSort(const vector<int>& datos);
     ~SelectionSort();
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Selection Sort"; }
 
 private:
-    int m_indiceMinimo;  // Indice del minimo encontrado
+    int m_indiceMinimo;  
 };
 
 #endif

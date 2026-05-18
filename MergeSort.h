@@ -8,25 +8,25 @@ using namespace std;
 
 class MergeSort : public AlgoritmoOrdenamiento {
 public:
-    MergeSort(const vector<int>& datos);
+    explicit MergeSort(const vector<int>& datos);
     ~MergeSort();
     
     void reiniciar(const vector<int>& datos) override;
     void paso() override;
-    string nombre() const override;
+    string nombre() const override { return "Merge Sort"; }
 
 private:
-    // Estructura para una tarea pendiente
+    
     struct Tarea {
         int izq;
         int der;
         bool esMerge;
     };
 
-    stack<Tarea> m_tareas;    // Pila de tareas pendientes
-    vector<int> m_temp;       // Vector auxiliar para mezclar
+    stack<Tarea> m_tareas;    
+    vector<int> m_temp;       
 
-    // Estado del merge actual
+    
     int m_mergeIzq;
     int m_mergeMid;
     int m_mergeDer;

@@ -3,6 +3,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <iomanip>
 
 #include "AlgoritmoOrdenamiento.h"
 #include "BubbleSort.h"
@@ -10,21 +12,22 @@
 #include "SelectionSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "MemoryAnalysis.h"
 
 using namespace std;
 
-// Genera numeros aleatorios
+
 vector<int> generarAleatorios(int cantidad) {
     vector<int> datos(cantidad);
     
     for (int i = 0; i < cantidad; i++) {
-        datos[i] = rand() % 1000 + 1;  // Numeros entre 1 y 1000
+        datos[i] = rand() % 1000 + 1;  
     }
     
     return datos;
 }
 
-// Lee numeros desde archivo
+
 vector<int> leerDesdeArchivo(string nombreArchivo) {
     vector<int> datos;
     ifstream archivo(nombreArchivo.c_str());
@@ -43,7 +46,7 @@ vector<int> leerDesdeArchivo(string nombreArchivo) {
     return datos;
 }
 
-// Crea el algoritmo segun la opcion
+
 AlgoritmoOrdenamiento* crearAlgoritmo(int opcion, vector<int> datos) {
     switch (opcion) {
         case 1: return new BubbleSort(datos);
@@ -55,24 +58,32 @@ AlgoritmoOrdenamiento* crearAlgoritmo(int opcion, vector<int> datos) {
     }
 }
 
-// Ejecuta y muestra resultados
+
 void ejecutarAlgoritmo(AlgoritmoOrdenamiento* algo) {
-    // Ejecutar todos los pasos
+    
+    auto inicio = chrono::high_resolution_clock::now();
+
+    
     while (!algo->terminado()) {
         algo->paso();
     }
 
+    
+    auto fin = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> tiempo = fin - inicio;
+
     cout << endl;
     cout << "--- Resultados de " << algo->nombre() << " ---" << endl;
-    cout << "Comparaciones: " << algo->getComparaciones() << endl;
-    cout << "Intercambios:  " << algo->getIntercambios() << endl;
+    cout << "Comparaciones: " << algo->comparaciones() << endl;
+    cout << "Intercambios:  " << algo->intercambios() << endl;
+    cout << "Tiempo:        " << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
-    // Mostrar primeros elementos
-    vector<int> ordenado = algo->getDatos();
+    
+    const vector<int>& ordenado = algo->datos();
     cout << "Primeros 10 elementos: ";
     int mostrar = 10;
-    if (algo->getTamano() < 10) {
-        mostrar = algo->getTamano();
+    if (algo->tamano() < 10) {
+        mostrar = algo->tamano();
     }
     for (int i = 0; i < mostrar; i++) {
         cout << ordenado[i] << " ";
@@ -80,7 +91,7 @@ void ejecutarAlgoritmo(AlgoritmoOrdenamiento* algo) {
     cout << endl;
 }
 
-// Menu principal
+
 void mostrarMenu() {
     cout << endl;
     cout << "====================================" << endl;
@@ -98,7 +109,7 @@ void mostrarMenu() {
     cout << "Opcion: ";
 }
 
-// Menu de algoritmos
+
 void mostrarMenuAlgoritmos() {
     cout << endl;
     cout << "--- Seleccione algoritmo ---" << endl;
@@ -110,7 +121,7 @@ void mostrarMenuAlgoritmos() {
     cout << "Opcion: ";
 }
 
-// Pruebas comparativas
+
 void ejecutarPruebas() {
     cout << endl;
     cout << "========== PRUEBAS COMPARATIVAS ==========" << endl;
@@ -118,13 +129,16 @@ void ejecutarPruebas() {
     int tamanos[] = {10, 50, 100};
     string nombres[] = {"Bubble Sort", "Insertion Sort", "Selection Sort", "Merge Sort", "Quick Sort"};
 
+    const int wAlgo = 18;
+    const int wNum = 15;
+
     for (int t = 0; t < 3; t++) {
         int tam = tamanos[t];
         
         cout << endl;
         cout << "--- DATOS ALEATORIOS (" << tam << " elementos) ---" << endl;
-        cout << "Algoritmo          Comparaciones  Intercambios" << endl;
-        cout << "----------------------------------------------" << endl;
+        cout << left << setw(wAlgo) << "Algoritmo" << setw(wNum) << "Comparaciones" << setw(wNum) << "Intercambios" << "Tiempo (ms)" << endl;
+        cout << "------------------------------------------------------------" << endl;
 
         vector<int> datosBase = generarAleatorios(tam);
 
@@ -132,37 +146,29 @@ void ejecutarPruebas() {
             vector<int> datosCopia = datosBase;
             AlgoritmoOrdenamiento* algo = crearAlgoritmo(i, datosCopia);
 
+            auto inicio = chrono::high_resolution_clock::now();
+
             while (!algo->terminado()) {
                 algo->paso();
             }
 
-            cout << nombres[i-1];
-            // Espacios para alinear
-            for (int s = nombres[i-1].length(); s < 19; s++) {
-                cout << " ";
-            }
-            cout << algo->getComparaciones();
-            // Espacios para alinear
-            int numComp = algo->getComparaciones();
-            int digitos = 1;
-            while (numComp >= 10) {
-                numComp = numComp / 10;
-                digitos++;
-            }
-            for (int s = digitos; s < 15; s++) {
-                cout << " ";
-            }
-            cout << algo->getIntercambios() << endl;
+            auto fin = chrono::high_resolution_clock::now();
+            chrono::duration<double, std::milli> tiempo = fin - inicio;
+
+            cout << left << setw(wAlgo) << nombres[i-1]
+                  << setw(wNum) << algo->comparaciones()
+                  << setw(wNum) << algo->intercambios()
+                  << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
             delete algo;
         }
     }
 
-    // Datos ordenados ascendente
+    
     cout << endl;
     cout << "--- DATOS ORDENADOS ASCENDENTE (50 elementos) ---" << endl;
-    cout << "Algoritmo          Comparaciones  Intercambios" << endl;
-    cout << "----------------------------------------------" << endl;
+    cout << left << setw(wAlgo) << "Algoritmo" << setw(wNum) << "Comparaciones" << setw(wNum) << "Intercambios" << "Tiempo (ms)" << endl;
+    cout << "------------------------------------------------------------" << endl;
 
     vector<int> datosAsc(50);
     for (int i = 0; i < 50; i++) {
@@ -173,34 +179,28 @@ void ejecutarPruebas() {
         vector<int> datosCopia = datosAsc;
         AlgoritmoOrdenamiento* algo = crearAlgoritmo(i, datosCopia);
 
+        auto inicio = chrono::high_resolution_clock::now();
+
         while (!algo->terminado()) {
             algo->paso();
         }
 
-        cout << nombres[i-1];
-        for (int s = nombres[i-1].length(); s < 19; s++) {
-            cout << " ";
-        }
-        cout << algo->getComparaciones();
-        int numComp = algo->getComparaciones();
-        int digitos = 1;
-        while (numComp >= 10) {
-            numComp = numComp / 10;
-            digitos++;
-        }
-        for (int s = digitos; s < 15; s++) {
-            cout << " ";
-        }
-        cout << algo->getIntercambios() << endl;
+        auto fin = chrono::high_resolution_clock::now();
+        chrono::duration<double, std::milli> tiempo = fin - inicio;
+
+        cout << left << setw(wAlgo) << nombres[i-1]
+               << setw(wNum) << algo->comparaciones()
+               << setw(wNum) << algo->intercambios()
+               << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
         delete algo;
     }
 
-    // Datos ordenados descendente
+    
     cout << endl;
     cout << "--- DATOS ORDENADOS DESCENDENTE (50 elementos) ---" << endl;
-    cout << "Algoritmo          Comparaciones  Intercambios" << endl;
-    cout << "----------------------------------------------" << endl;
+    cout << left << setw(wAlgo) << "Algoritmo" << setw(wNum) << "Comparaciones" << setw(wNum) << "Intercambios" << "Tiempo (ms)" << endl;
+    cout << "------------------------------------------------------------" << endl;
 
     vector<int> datosDesc(50);
     for (int i = 0; i < 50; i++) {
@@ -211,82 +211,34 @@ void ejecutarPruebas() {
         vector<int> datosCopia = datosDesc;
         AlgoritmoOrdenamiento* algo = crearAlgoritmo(i, datosCopia);
 
+        auto inicio = chrono::high_resolution_clock::now();
+
         while (!algo->terminado()) {
             algo->paso();
         }
 
-        cout << nombres[i-1];
-        for (int s = nombres[i-1].length(); s < 19; s++) {
-            cout << " ";
-        }
-        cout << algo->getComparaciones();
-        int numComp = algo->getComparaciones();
-        int digitos = 1;
-        while (numComp >= 10) {
-            numComp = numComp / 10;
-            digitos++;
-        }
-        for (int s = digitos; s < 15; s++) {
-            cout << " ";
-        }
-        cout << algo->getIntercambios() << endl;
+        auto fin = chrono::high_resolution_clock::now();
+        chrono::duration<double, std::milli> tiempo = fin - inicio;
+
+        cout << left << setw(wAlgo) << nombres[i-1]
+               << setw(wNum) << algo->comparaciones()
+               << setw(wNum) << algo->intercambios()
+               << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
         delete algo;
     }
 }
 
-// Analisis de memoria
+
 void analisisMemoria() {
     cout << endl;
     cout << "========== ANALISIS DE MEMORIA ==========" << endl;
-
-    cout << endl;
-    cout << "--- Tamanos de tipos basicos ---" << endl;
-    cout << "int              : " << sizeof(int) << " bytes" << endl;
-    cout << "bool             : " << sizeof(bool) << " bytes" << endl;
-    cout << "vector<int>      : " << sizeof(vector<int>) << " bytes" << endl;
-    cout << "puntero (void*)  : " << sizeof(void*) << " bytes" << endl;
-
-    cout << endl;
-    cout << "--- Tamanos de las clases ---" << endl;
-    cout << "AlgoritmoOrdenamiento : " << sizeof(AlgoritmoOrdenamiento) << " bytes" << endl;
-    cout << "BubbleSort            : " << sizeof(BubbleSort) << " bytes" << endl;
-    cout << "InsertionSort         : " << sizeof(InsertionSort) << " bytes" << endl;
-    cout << "SelectionSort         : " << sizeof(SelectionSort) << " bytes" << endl;
-    cout << "MergeSort             : " << sizeof(MergeSort) << " bytes" << endl;
-    cout << "QuickSort             : " << sizeof(QuickSort) << " bytes" << endl;
-
-    cout << endl;
-    cout << "--- Stack vs Heap ---" << endl;
-    vector<int> datos;
-    datos.push_back(5);
-    datos.push_back(3);
-    datos.push_back(8);
-    datos.push_back(1);
-    datos.push_back(9);
-    datos.push_back(2);
-    datos.push_back(7);
-    datos.push_back(4);
-    datos.push_back(6);
-
-    BubbleSort a1(datos);
-    AlgoritmoOrdenamiento* a2 = new BubbleSort(datos);
-
-    cout << "Direccion a1 (stack): " << &a1 << endl;
-    cout << "Direccion a2 (heap) : " << a2 << endl;
-
-    cout << endl;
-    cout << "--- Memoria del arreglo interno ---" << endl;
-    cout << "Elementos en el vector     : " << a1.getTamano() << endl;
-    cout << "sizeof(vector<int>) fijo   : " << sizeof(vector<int>) << " bytes" << endl;
-    cout << "Datos reales en heap       : " << a1.getTamano() * sizeof(int) << " bytes" << endl;
-
-    delete a2;
+    MemoryAnalysis::run();
 }
 
-// Funcion principal
+
 int main() {
-    // Inicializar semilla para numeros aleatorios
+    
     srand(time(0));
     
     vector<int> datosActuales;

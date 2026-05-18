@@ -1,5 +1,3 @@
-#include "MemoryAnalysis.h"
-
 #include <iostream>
 #include <vector>
 
@@ -12,7 +10,7 @@
 
 using namespace std;
 
-void MemoryAnalysis::run() {
+int main() {
     cout << "=== Tipos que usa el algoritmo ===" << endl;
     cout << "int              : " << sizeof(int) << " bytes" << endl;
     cout << "bool             : " << sizeof(bool) << " bytes" << endl;
@@ -27,12 +25,15 @@ void MemoryAnalysis::run() {
     cout << "sizeof(MergeSort)             : " << sizeof(MergeSort) << " bytes" << endl;
     cout << "sizeof(QuickSort)             : " << sizeof(QuickSort) << " bytes" << endl;
 
-    int suma = (int)(sizeof(void*) + sizeof(vector<int>) + sizeof(bool)
-        + sizeof(int) + sizeof(int) + sizeof(int) + sizeof(int));
+    int sumaAtributos = (int)(sizeof(void*)
+        + sizeof(vector<int>)
+        + sizeof(bool)
+        + sizeof(int) * 4);
+
     cout << "\n=== Analisis de padding ===" << endl;
-    cout << "Suma de atributos (sin padding) : " << suma << " bytes" << endl;
+    cout << "Suma de atributos (sin padding) : " << sumaAtributos << " bytes" << endl;
     cout << "sizeof(AlgoritmoOrdenamiento)   : " << sizeof(AlgoritmoOrdenamiento) << " bytes" << endl;
-    cout << "Diferencia por padding          : " << (int)sizeof(AlgoritmoOrdenamiento) - suma << " bytes" << endl;
+    cout << "Diferencia por padding          : " << (int)sizeof(AlgoritmoOrdenamiento) - sumaAtributos << " bytes" << endl;
 
     cout << "\n=== Stack vs Heap ===" << endl;
     vector<int> datos = { 5, 3, 8, 1, 9, 2, 7, 4, 6 };
@@ -47,4 +48,5 @@ void MemoryAnalysis::run() {
     cout << "Datos reales en heap                   : " << a1.tamano() * sizeof(int) << " bytes" << endl;
 
     delete a2;
+    return 0;
 }

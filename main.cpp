@@ -12,7 +12,6 @@
 #include "SelectionSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
-#include "MemoryAnalysis.h"
 
 using namespace std;
 
@@ -103,7 +102,6 @@ void mostrarMenu() {
     cout << "4. Generar datos ordenados (descendente)" << endl;
     cout << "5. Seleccionar algoritmo y ordenar" << endl;
     cout << "6. Ejecutar pruebas comparativas" << endl;
-    cout << "7. Analisis de memoria" << endl;
     cout << "0. Salir" << endl;
     cout << "------------------------------------" << endl;
     cout << "Opcion: ";
@@ -230,13 +228,6 @@ void ejecutarPruebas() {
 }
 
 
-void analisisMemoria() {
-    cout << endl;
-    cout << "========== ANALISIS DE MEMORIA ==========" << endl;
-    MemoryAnalysis::run();
-}
-
-
 int main() {
     
     srand(time(0));
@@ -314,9 +305,6 @@ int main() {
             }
             case 6:
                 ejecutarPruebas();
-                break;
-            case 7:
-                analisisMemoria();
                 break;
             case 0:
                 cout << "Saliendo..." << endl;

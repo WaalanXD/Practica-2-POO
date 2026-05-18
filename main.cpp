@@ -16,18 +16,18 @@
 
 using namespace std;
 
-// Genera numeros aleatorios
+
 vector<int> generarAleatorios(int cantidad) {
     vector<int> datos(cantidad);
     
     for (int i = 0; i < cantidad; i++) {
-        datos[i] = rand() % 1000 + 1;  // Numeros entre 1 y 1000
+        datos[i] = rand() % 1000 + 1;  
     }
     
     return datos;
 }
 
-// Lee numeros desde archivo
+
 vector<int> leerDesdeArchivo(string nombreArchivo) {
     vector<int> datos;
     ifstream archivo(nombreArchivo.c_str());
@@ -46,7 +46,7 @@ vector<int> leerDesdeArchivo(string nombreArchivo) {
     return datos;
 }
 
-// Crea el algoritmo segun la opcion
+
 AlgoritmoOrdenamiento* crearAlgoritmo(int opcion, vector<int> datos) {
     switch (opcion) {
         case 1: return new BubbleSort(datos);
@@ -58,32 +58,32 @@ AlgoritmoOrdenamiento* crearAlgoritmo(int opcion, vector<int> datos) {
     }
 }
 
-// Ejecuta y muestra resultados
+
 void ejecutarAlgoritmo(AlgoritmoOrdenamiento* algo) {
-    // Iniciar cronometro
+    
     auto inicio = chrono::high_resolution_clock::now();
 
-    // Ejecutar todos los pasos
+    
     while (!algo->terminado()) {
         algo->paso();
     }
 
-    // Detener cronometro
+    
     auto fin = chrono::high_resolution_clock::now();
     chrono::duration<double, std::milli> tiempo = fin - inicio;
 
     cout << endl;
     cout << "--- Resultados de " << algo->nombre() << " ---" << endl;
-    cout << "Comparaciones: " << algo->getComparaciones() << endl;
-    cout << "Intercambios:  " << algo->getIntercambios() << endl;
+    cout << "Comparaciones: " << algo->comparaciones() << endl;
+    cout << "Intercambios:  " << algo->intercambios() << endl;
     cout << "Tiempo:        " << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
-    // Mostrar primeros elementos
-    vector<int> ordenado = algo->getDatos();
+    
+    const vector<int>& ordenado = algo->datos();
     cout << "Primeros 10 elementos: ";
     int mostrar = 10;
-    if (algo->getTamano() < 10) {
-        mostrar = algo->getTamano();
+    if (algo->tamano() < 10) {
+        mostrar = algo->tamano();
     }
     for (int i = 0; i < mostrar; i++) {
         cout << ordenado[i] << " ";
@@ -91,7 +91,7 @@ void ejecutarAlgoritmo(AlgoritmoOrdenamiento* algo) {
     cout << endl;
 }
 
-// Menu principal
+
 void mostrarMenu() {
     cout << endl;
     cout << "====================================" << endl;
@@ -109,7 +109,7 @@ void mostrarMenu() {
     cout << "Opcion: ";
 }
 
-// Menu de algoritmos
+
 void mostrarMenuAlgoritmos() {
     cout << endl;
     cout << "--- Seleccione algoritmo ---" << endl;
@@ -121,7 +121,7 @@ void mostrarMenuAlgoritmos() {
     cout << "Opcion: ";
 }
 
-// Pruebas comparativas
+
 void ejecutarPruebas() {
     cout << endl;
     cout << "========== PRUEBAS COMPARATIVAS ==========" << endl;
@@ -156,15 +156,15 @@ void ejecutarPruebas() {
             chrono::duration<double, std::milli> tiempo = fin - inicio;
 
             cout << left << setw(wAlgo) << nombres[i-1]
-                 << setw(wNum) << algo->getComparaciones()
-                 << setw(wNum) << algo->getIntercambios()
+                  << setw(wNum) << algo->comparaciones()
+                  << setw(wNum) << algo->intercambios()
                   << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
             delete algo;
         }
     }
 
-    // Datos ordenados ascendente
+    
     cout << endl;
     cout << "--- DATOS ORDENADOS ASCENDENTE (50 elementos) ---" << endl;
     cout << left << setw(wAlgo) << "Algoritmo" << setw(wNum) << "Comparaciones" << setw(wNum) << "Intercambios" << "Tiempo (ms)" << endl;
@@ -189,14 +189,14 @@ void ejecutarPruebas() {
         chrono::duration<double, std::milli> tiempo = fin - inicio;
 
         cout << left << setw(wAlgo) << nombres[i-1]
-             << setw(wNum) << algo->getComparaciones()
-             << setw(wNum) << algo->getIntercambios()
+               << setw(wNum) << algo->comparaciones()
+               << setw(wNum) << algo->intercambios()
                << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
         delete algo;
     }
 
-    // Datos ordenados descendente
+    
     cout << endl;
     cout << "--- DATOS ORDENADOS DESCENDENTE (50 elementos) ---" << endl;
     cout << left << setw(wAlgo) << "Algoritmo" << setw(wNum) << "Comparaciones" << setw(wNum) << "Intercambios" << "Tiempo (ms)" << endl;
@@ -221,24 +221,24 @@ void ejecutarPruebas() {
         chrono::duration<double, std::milli> tiempo = fin - inicio;
 
         cout << left << setw(wAlgo) << nombres[i-1]
-             << setw(wNum) << algo->getComparaciones()
-             << setw(wNum) << algo->getIntercambios()
+               << setw(wNum) << algo->comparaciones()
+               << setw(wNum) << algo->intercambios()
                << fixed << setprecision(3) << tiempo.count() << " ms" << endl;
 
         delete algo;
     }
 }
 
-// Analisis de memoria
+
 void analisisMemoria() {
     cout << endl;
     cout << "========== ANALISIS DE MEMORIA ==========" << endl;
     MemoryAnalysis::run();
 }
 
-// Funcion principal
+
 int main() {
-    // Inicializar semilla para numeros aleatorios
+    
     srand(time(0));
     
     vector<int> datosActuales;

@@ -1,6 +1,6 @@
 #include "QuickSort.h"
 
-// Constructor
+
 QuickSort::QuickSort(const vector<int>& datos) : AlgoritmoOrdenamiento(datos) {
     m_partIzq = 0;
     m_partDer = 0;
@@ -11,15 +11,15 @@ QuickSort::QuickSort(const vector<int>& datos) : AlgoritmoOrdenamiento(datos) {
     inicializarRangos();
 }
 
-// Destructor
+
 QuickSort::~QuickSort() {
-    // Limpiar la pila
+    
     while (!m_rangos.empty()) {
         m_rangos.pop();
     }
 }
 
-// Reiniciar
+
 void QuickSort::reiniciar(const vector<int>& datos) {
     AlgoritmoOrdenamiento::reiniciar(datos);
     m_partIzq = 0;
@@ -28,14 +28,14 @@ void QuickSort::reiniciar(const vector<int>& datos) {
     m_indicePart = 0;
     m_enParticion = false;
 
-    // Limpiar la pila
+    
     while (!m_rangos.empty()) {
         m_rangos.pop();
     }
     inicializarRangos();
 }
 
-// Inicializar rangos
+
 void QuickSort::inicializarRangos() {
     if (m_datos.size() <= 1) {
         m_terminado = true;
@@ -48,21 +48,21 @@ void QuickSort::inicializarRangos() {
     m_rangos.push(inicial);
 }
 
-// Un paso del algoritmo
+
 void QuickSort::paso() {
     if (m_terminado) {
         return;
     }
 
-    // Si estamos particionando, continuar
+    
     if (m_enParticion) {
-        // Hacer UNA comparacion
+        
         m_comparaciones++;
 
         if (m_datos[m_j] < m_pivote) {
             m_indicePart++;
             if (m_indicePart != m_j) {
-                // Intercambio manual
+                
                 int temp = m_datos[m_indicePart];
                 m_datos[m_indicePart] = m_datos[m_j];
                 m_datos[m_j] = temp;
@@ -74,9 +74,9 @@ void QuickSort::paso() {
         m_j++;
         m_i = m_indicePart;
 
-        // Si terminamos de recorrer
+        
         if (m_j >= m_partDer) {
-            // Colocar pivote en su posicion final
+            
             int temp = m_datos[m_indicePart + 1];
             m_datos[m_indicePart + 1] = m_datos[m_partDer];
             m_datos[m_partDer] = temp;
@@ -84,7 +84,7 @@ void QuickSort::paso() {
             m_intercambios++;
             int posPivote = m_indicePart + 1;
 
-            // Agregar sub-rangos a la pila
+            
             if (posPivote + 1 < m_partDer) {
                 Rango derecho;
                 derecho.izq = posPivote + 1;
@@ -103,22 +103,22 @@ void QuickSort::paso() {
         return;
     }
 
-    // Si no hay mas rangos, terminamos
+    
     if (m_rangos.empty()) {
         m_terminado = true;
         return;
     }
 
-    // Obtener el siguiente rango
+    
     Rango rango = m_rangos.top();
     m_rangos.pop();
 
     if (rango.izq < rango.der) {
-        // Iniciar particion
+        
         m_partIzq = rango.izq;
         m_partDer = rango.der;
-        // Elegir pivote por "mediana de tres" (izq, medio, der) para reducir particiones desbalanceadas.
-        // Luego lo movemos al final para reutilizar la particion actual.
+        
+        
         int izq = rango.izq;
         int der = rango.der;
         int mid = izq + (der - izq) / 2;
@@ -133,23 +133,23 @@ void QuickSort::paso() {
         };
 
         int indicePivote;
-        // indicePivote = indice del valor mediano entre a, b, c
-        // (con comparaciones contadas de forma explícita)
+        
+        
         if (less(a, b)) {
             if (less(b, c)) {
-                indicePivote = mid;      // a < b < c
+                indicePivote = mid;      
             } else if (less(a, c)) {
-                indicePivote = der;      // a < c <= b
+                indicePivote = der;      
             } else {
-                indicePivote = izq;      // c <= a < b
+                indicePivote = izq;      
             }
         } else {
             if (less(a, c)) {
-                indicePivote = izq;      // b <= a < c
+                indicePivote = izq;      
             } else if (less(b, c)) {
-                indicePivote = der;      // b < c <= a
+                indicePivote = der;      
             } else {
-                indicePivote = mid;      // c <= b <= a
+                indicePivote = mid;      
             }
         }
 

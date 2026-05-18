@@ -15,7 +15,7 @@ public:
     string nombre() const override { return "Selection Sort"; }
 
 private:
-    int m_indiceMinimo;  // Indice del minimo encontrado
+    int m_indiceMinimo;  
 };
 
 #endif

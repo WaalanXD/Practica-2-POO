@@ -16,15 +16,15 @@ public:
     string nombre() const override { return "Quick Sort"; }
 
 private:
-    // Estructura para un rango a ordenar
+    
     struct Rango {
         int izq;
         int der;
     };
 
-    stack<Rango> m_rangos;  // Pila de rangos pendientes
+    stack<Rango> m_rangos;  
 
-    // Estado de la particion actual
+    
     int m_partIzq;
     int m_partDer;
     int m_pivote;

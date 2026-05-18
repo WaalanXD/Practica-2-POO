@@ -15,8 +15,8 @@ public:
     string nombre() const override { return "Insertion Sort"; }
 
 private:
-    int m_valorActual;   // El valor que estamos insertando
-    bool m_insertando;   // Si estamos moviendo elementos
+    int m_valorActual;   
+    bool m_insertando;   
 };
 
 #endif

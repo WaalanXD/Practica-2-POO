@@ -42,9 +42,9 @@ void MemoryAnalysis::run() {
     cout << "Direccion a2 (heap) : " << a2 << endl;
 
     cout << "\n=== Memoria del arreglo interno ===" << endl;
-    cout << "Elementos                : " << a1.getTamano() << endl;
-    cout << "sizeof(vector<int>)      : " << sizeof(vector<int>) << " bytes" << endl;
-    cout << "Datos reales en heap     : " << a1.getTamano() * sizeof(int) << " bytes" << endl;
+    cout << "Elementos                              : " << a1.tamano() << endl;
+    cout << "sizeof(vector<int>) sin contar datos   : " << sizeof(vector<int>) << " bytes" << endl;
+    cout << "Datos reales en heap                   : " << a1.tamano() * sizeof(int) << " bytes" << endl;
 
     delete a2;
 }

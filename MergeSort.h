@@ -16,17 +16,17 @@ public:
     string nombre() const override { return "Merge Sort"; }
 
 private:
-    // Estructura para una tarea pendiente
+    
     struct Tarea {
         int izq;
         int der;
         bool esMerge;
     };
 
-    stack<Tarea> m_tareas;    // Pila de tareas pendientes
-    vector<int> m_temp;       // Vector auxiliar para mezclar
+    stack<Tarea> m_tareas;    
+    vector<int> m_temp;       
 
-    // Estado del merge actual
+    
     int m_mergeIzq;
     int m_mergeMid;
     int m_mergeDer;

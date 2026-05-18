@@ -15,8 +15,8 @@ public:
     string nombre() const override { return "Bubble Sort"; }
 
 private:
-    bool m_huboSwap;  // Si hubo intercambio en esta pasada
-    int m_limite;     // Hasta donde comparar
+    bool m_huboSwap;  
+    int m_limite;     
 };
 
 #endif
